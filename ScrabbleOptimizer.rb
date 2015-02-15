@@ -30,7 +30,6 @@ class ScrabbleOptimizer
 				winner_board.update(word_result)
 			end
 		end
-
 		winner_board
 	end
 
