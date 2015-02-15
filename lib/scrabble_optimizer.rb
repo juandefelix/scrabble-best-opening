@@ -12,7 +12,7 @@ class ScrabbleOptimizer
 		@quants_hash = Hash.new(0)
 		@available_words = []
 		@board = []
-
+binding.pry
 		file = File.read(path)
 		file_hash = JSON.parse(file, symbolize_names: true)
 
@@ -33,7 +33,7 @@ class ScrabbleOptimizer
 		winner_board_hash
 	end
 
-	private
+	# private
 
 	# finds wich row is best for a word
 	def lookup_word(word)
@@ -126,4 +126,5 @@ class ScrabbleOptimizer
 end
 
 so = ScrabbleOptimizer.new("INPUT.json")
-p so.get_winner_board_hash
+# p so.get_winner_board_hash
+p so.get_points('aa', [1, 1])
