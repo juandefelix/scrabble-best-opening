@@ -6,6 +6,7 @@ require "json"
 require "pry-byebug"
 
 class ScrabbleOptimizer
+	# attr_reader :board
 
 	def initialize(path)
 		@values_hash = {}
@@ -21,6 +22,24 @@ class ScrabbleOptimizer
 		make_board(file_hash)
 	end
 
+	def get_best_opening
+		set_best_opening
+		@board
+	end
+
+	private
+
+	def set_best_opening
+		winner_hash = get_winner_board_hash
+		row = winner_hash[:row]
+		index = winner_hash[:index]
+		word = winner_hash[:word]
+		word_array = word.split('')
+
+		@board[row][index, word.size] = word_array
+	end
+
+
 	def get_winner_board_hash
 		winner_board_hash = { word: nil, row: nil, index: nil, value: 0 }
 		@available_words.each do |word|
@@ -33,7 +52,6 @@ class ScrabbleOptimizer
 		winner_board_hash
 	end
 
-	# private
 
 	# finds wich row is best for a word
 	def lookup_word(word)
@@ -125,6 +143,5 @@ class ScrabbleOptimizer
 	end
 end
 
-so = ScrabbleOptimizer.new('./lib/INPUT.json')
-p so.get_winner_board_hash
-# p so.get_points('aa', [1, 1])
+
+pp ScrabbleOptimizer.new('./lib/INPUT.json').get_best_opening
