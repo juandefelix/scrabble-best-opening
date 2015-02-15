@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'bundler/setup'
+
+
 require "json"
 require "pry-byebug"
 
@@ -5,30 +9,35 @@ class ScrabbleOptimizer
 
 	def initialize(path)
 		file = File.read(path)
-		file_hash = JSON.parse(file)
+		file_hash = JSON.parse(file, symbolize_names: true)
 		read_tiles(file_hash)
-		filter_words(file_hash)
-		read_board(file_hash)
+		# filter_words(file_hash)
+		# read_board(file_hash)
 	end
 
 	def read_tiles(file_hash)
-		tiles = file_hash["tiles"]
-		@points = {}
-		@quants = Hash.new(0)
+		@letter_hash = {}
+		tiles = @file_hash[:tiles]
 
 		tiles.each do |tile|
-			@points[tile[0]] = tile[1..-1].to_i
-			@quants[tile[0]] += 1
+			letter = tile[0]
+			value = tile[1..-1]
+
+			@letter_hash[letter] ||= { value: 0, number: 0}
+
+			@letter_hash[letter][:value] = value
+			@letter_hash[letter][:number] += 1
 		end
+		binding.pry
 	end
 
 	def filter_words(file_hash)
 		@words = []
 		words = file_hash["dictionary"]
-		words.each { |word| @words << word if filter_word word }
+		words.each { |word| @words << word if is_available? word }
 	end
 
-	def filter_word(word)
+	def is_available?(word)
 		quants = @quants.dup
 		word.chars.each do |char|
 			if quants[char] > 0
@@ -37,7 +46,7 @@ class ScrabbleOptimizer
 				return false
 			end
 		end
-		return true
+		true
 	end
 
 	def read_board(file_hash)
