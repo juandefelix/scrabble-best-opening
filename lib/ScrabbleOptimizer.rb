@@ -33,7 +33,7 @@ class ScrabbleOptimizer
 		winner_board_hash
 	end
 
-private
+	private
 
 	# finds wich row is best for a word
 	def lookup_word(word)
