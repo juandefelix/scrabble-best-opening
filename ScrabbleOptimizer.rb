@@ -21,36 +21,36 @@ class ScrabbleOptimizer
 		make_board(file_hash)
 	end
 
-	def get_winner_board
-		winner_board = { word: nil, row: nil, index: nil, value: 0 }
+	def get_winner_board_hash
+		winner_board_hash = { word: nil, row: nil, index: nil, value: 0 }
 		@available_words.each do |word|
-			word_result = find_best_board_for_word(word)
-			if word_result[:value] > winner_board[:value]
-				winner_board[:word] = word
-				winner_board.update(word_result)
+			word_result = lookup_word(word)
+			if word_result[:value] > winner_board_hash[:value]
+				winner_board_hash[:word] = word
+				winner_board_hash.update(word_result)
 			end
 		end
-		winner_board
+		winner_board_hash
 	end
 
 private
 
-	# finds wich row is best
-	def find_best_board_for_word(word)
+	# finds wich row is best for a word
+	def lookup_word(word)
 		winner_board = { row: nil, index: nil, value: 0, direction: nil }
 
 		@board.each_with_index do |row, i|
-			best_in_row = find_best_in_row(word, row, i)
-			if best_in_row[:value] > winner_board[:value]
+			row_result = lookup_row(word, row, i)
+			if row_result[:value] > winner_board[:value]
 				winner_board[:row] = i
 				winner_board[:direction] = 'horizotal'
-				winner_board.update(best_in_row)
+				winner_board.update(row_result)
 			end
 		end
 
 		# find_best_vertical
 		@board.transpose.each_with_index do |row, i|
-			best_in_row = find_best_in_row(word, row, i)
+			best_in_row = lookup_row(word, row, i)
 			if best_in_row[:value] > winner_board[:value]
 				winner_board[:row] = i
 				winner_board.update(best_in_row)
@@ -67,16 +67,15 @@ private
 	end
 
 	#finds wich place in a row is best
-	def find_best_in_row(word, row, row_index)
+	def lookup_row(word, row, row_index)
 		winner_index = { index: nil, value: 0 }
 
 		last_place = row.size - word.size
-		row_chunks = []
 
 		(0..last_place).each do |n|
-			new_value = get_points(word, row[n...n+word.size])
-			if new_value > winner_index[:value]
-				winner_index[:value] = new_value
+			best_index = get_points(word, row[n...n+word.size])
+			if best_index > winner_index[:value]
+				winner_index[:value] = best_index
 				winner_index[:index] = n
 			end
 		end
@@ -123,8 +122,8 @@ private
 	def make_board(file_hash)
 		raw_board =file_hash[:board]
 		@board = raw_board.map { |row| row.split(" ").map!(&:to_i) }
-	each_with_index
+	end
 end
 
 so = ScrabbleOptimizer.new("INPUT.json")
-p so.get_winner_board
+p so.get_winner_board_hash
