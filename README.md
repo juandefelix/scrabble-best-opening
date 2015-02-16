@@ -1,6 +1,6 @@
 ## Run the ScrabbleOptizer file
 The file that contains the Ruby class is [here](https://github.com/juandefelix/scrabble-best-opening/blob/master/lib/scrabble_optimizer.rb).
- You can clone the repo, the run `cd lib`, and `ruby scrabble_optiimzer.rb`. The best opening board will show in the screen. 
+ You can clone the repo, cd into the repo, then run `cd lib`, and `ruby scrabble_optiimzer.rb`. The best opening board will show in the screen. 
 
 ## [[#8] Best Scrabble Opening](http://www.puzzlenode.com/puzzles/8-best-scrabble-opening)
 
