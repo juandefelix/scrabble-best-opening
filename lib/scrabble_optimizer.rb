@@ -24,7 +24,13 @@ class ScrabbleOptimizer
 
 	def get_best_opening
 		set_best_opening
-		@board
+		draw_board
+	end
+
+	def draw_board
+		@board.each do |row| 
+			puts row.map(&:to_s).join(' ')
+		end
 	end
 
 	private
@@ -144,4 +150,4 @@ class ScrabbleOptimizer
 end
 
 
-pp ScrabbleOptimizer.new('./lib/INPUT.json').get_best_opening
+ScrabbleOptimizer.new('./lib/INPUT.json').get_best_opening
