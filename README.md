@@ -1,8 +1,12 @@
-# [[#8] Best Scrabble Opening](http://www.puzzlenode.com/puzzles/8-best-scrabble-opening)
+## Run the ScrabbleOptizer file
+The file that contains the Ruby class is [here](https://github.com/juandefelix/scrabble-best-opening/blob/master/lib/scrabble_optimizer.rb).
+ You can clone the repo, the run `cd lib`, and `ruby scrabble_optiimzer.rb`. The best opening board will show in the screen. 
+
+## [[#8] Best Scrabble Opening](http://www.puzzlenode.com/puzzles/8-best-scrabble-opening)
 
 _This puzzle was contributed by Alberto Fernández-Capel and published on May 15, 2011_
 
-# Best Scrabble Opening
+## Best Scrabble Opening
 
 In this puzzle you will try to find the best first move in a Scrabble-like game. You will be given:
 
